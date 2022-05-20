@@ -1,0 +1,31 @@
+spring:
+  codec:
+    maxInMemorySize: 10MB
+  r2dbc:
+    url: ${DB_URL}?schema=r2dbc_demo&connectTimeout=PT15S&initialSize=10&maxSize=25&maxLifeTime=PT10M&maxIdleTime=PT5M&maxAcquireTime=PT30S&maxCreateConnectionTime=PT15S&validationQuery=select%201
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    properties:
+      preparedStatementCacheQueries: 256
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${DB_JDBC_URL}&currentSchema=r2dbc_demo
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    hikari:
+      connection-timeout: 15000 # 15 seconds
+      idle-timeout: 300000 # 5 minutes
+      max-lifetime: 1800000 # 30 minutes
+      connection-test-query: select 1
+      minimum-idle: 10
+      maximum-pool-size: 25
+      pool-name: spring-hikari
+  liquibase:
+    enabled: true
+    change-log: classpath:db/changelog/database_changelog.xml
+    default-schema: r2dbc_demo
+    contexts: test
+
+logging:
+  level:
+    ROOT: INFO
