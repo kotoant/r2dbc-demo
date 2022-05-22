@@ -21,6 +21,4 @@ public class Parent {
 
     @Column("name")
     private String name;
-
-    private List<Child> children;
 }

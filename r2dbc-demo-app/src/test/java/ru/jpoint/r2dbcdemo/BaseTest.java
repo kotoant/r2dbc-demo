@@ -8,7 +8,7 @@ import ru.jpoint.r2dbcdemo.r2dbc.R2dbcService;
 
 @Slf4j
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-abstract class BateTest {
+abstract class BaseTest {
 
     protected static final R2dbcDemoPostgresqlContainer POSTGRESQL_CONTAINER =
         R2dbcDemoPostgresqlContainer.getInstance();

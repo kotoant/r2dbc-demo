@@ -4,9 +4,9 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <include file="1_create_tables.sql" relativeToChangelogFile="true"/>
+    <include file="1-create_tables.sql" relativeToChangelogFile="true"/>
 
-    <changeSet id="release/1" author="Anton.Kotov">
-        <tagDatabase tag="release/1"/>
+    <changeSet id="release/1.0" author="Anton.Kotov">
+        <tagDatabase tag="release/1.0"/>
     </changeSet>
 </databaseChangeLog>
