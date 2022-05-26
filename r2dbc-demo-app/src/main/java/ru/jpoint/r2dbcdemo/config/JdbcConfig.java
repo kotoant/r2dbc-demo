@@ -7,6 +7,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
+import org.springframework.jdbc.support.JdbcTransactionManager;
 import reactor.core.scheduler.Scheduler;
 import reactor.core.scheduler.Schedulers;
 
@@ -34,4 +36,10 @@ public class JdbcConfig {
         var threadCount = dataSource.getMaximumPoolSize();
         return Schedulers.newBoundedElastic(threadCount, Integer.MAX_VALUE, "reactiveJdbcServiceScheduler");
     }
+
+    @Bean
+    public DataSourceTransactionManager transactionManager(HikariDataSource dataSource) {
+        return new JdbcTransactionManager(dataSource);
+    }
+
 }

@@ -11,6 +11,8 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface R2dbcMapper {
     Parent fromDomain(DomainParent parent);
+
     List<Child> fromDomain(List<DomainChild> children);
+
     DomainParent toDomain(Parent parent, List<Child> children);
 }

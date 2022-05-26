@@ -8,11 +8,21 @@ import java.util.Collections;
 
 class R2dbcDemoApplicationTests extends BaseTest {
     @Test
-    void contextLoads() {
+    void saveR2dbc() {
         DomainParent parent = r2dbcService.saveParentWithChildren(
                 new DomainParent()
                         .setName("parent")
                         .setChildren(Collections.nCopies(1000, new DomainChild().setName("child")))
+        ).block();
+        System.out.println(parent);
+    }
+
+    @Test
+    void saveJdbc() {
+        DomainParent parent = jdbcService.saveParentWithChildren(
+            new DomainParent()
+                .setName("parent")
+                .setChildren(Collections.nCopies(1000, new DomainChild().setName("child")))
         ).block();
         System.out.println(parent);
     }

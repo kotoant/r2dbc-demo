@@ -4,6 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import ru.jpoint.r2dbcdemo.jdbc.JdbcService;
+import ru.jpoint.r2dbcdemo.jdbc.ReactiveJdbcService;
 import ru.jpoint.r2dbcdemo.r2dbc.R2dbcService;
 
 @Slf4j
@@ -25,4 +27,7 @@ abstract class BaseTest {
 
     @Autowired
     protected R2dbcService r2dbcService;
+
+    @Autowired
+    protected ReactiveJdbcService jdbcService;
 }
