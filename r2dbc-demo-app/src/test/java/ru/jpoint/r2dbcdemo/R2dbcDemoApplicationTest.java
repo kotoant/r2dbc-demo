@@ -1,12 +1,22 @@
 package ru.jpoint.r2dbcdemo;
 
+import eu.rekawek.toxiproxy.model.ToxicDirection;
+import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import ru.jpoint.r2dbcdemo.domain.DomainChild;
 import ru.jpoint.r2dbcdemo.domain.DomainParent;
 
 import java.util.Collections;
 
-class R2dbcDemoApplicationTests extends BaseTest {
+@Slf4j
+class R2dbcDemoApplicationTest extends BaseTest {
+
+    @BeforeAll
+    static void setUpAll() throws Exception {
+//        PROXY.toxics().latency("latency", ToxicDirection.DOWNSTREAM, 100)
+//            .setJitter(1);
+    }
     @Test
     void saveR2dbc() {
         DomainParent parent = r2dbcService.saveParentWithChildren(
@@ -14,7 +24,7 @@ class R2dbcDemoApplicationTests extends BaseTest {
                         .setName("parent")
                         .setChildren(Collections.nCopies(1000, new DomainChild().setName("child")))
         ).block();
-        System.out.println(parent);
+        log.info("r2dbc: {}", parent);
     }
 
     @Test
@@ -24,6 +34,6 @@ class R2dbcDemoApplicationTests extends BaseTest {
                 .setName("parent")
                 .setChildren(Collections.nCopies(1000, new DomainChild().setName("child")))
         ).block();
-        System.out.println(parent);
+        log.info("jdbc: {}", parent);
     }
 }

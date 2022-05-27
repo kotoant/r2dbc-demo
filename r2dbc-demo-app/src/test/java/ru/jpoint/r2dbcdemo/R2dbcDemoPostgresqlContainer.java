@@ -17,7 +17,7 @@ public final class R2dbcDemoPostgresqlContainer extends PostgreSQLContainer<R2db
     public static R2dbcDemoPostgresqlContainer getInstance() {
         if (container == null) {
             container = new R2dbcDemoPostgresqlContainer()
-                .withReuse(true)
+//                .withReuse(true)
                 .withStartupTimeout(Duration.ofMinutes(5))
                 .withUsername("r2dbc_demo")
                 .withDatabaseName("r2dbc_demo")
@@ -29,20 +29,21 @@ public final class R2dbcDemoPostgresqlContainer extends PostgreSQLContainer<R2db
         return container;
     }
 
-    private String getR2dbcUrl() {
+    public String getR2dbcUrl(String host, int port) {
         return "r2dbc:pool:postgresql://"
-            + getHost() + ":"
-            + getMappedPort(POSTGRESQL_PORT) + "/"
+            + host + ":"
+            + port + "/"
             + getDatabaseName();
+    }
+
+    public String getJdbcUrl(String host, int port) {
+        String additionalUrlParams = this.constructUrlParameters("?", "&");
+        return "jdbc:postgresql://" + host + ":" + port + "/" + this.getDatabaseName() + additionalUrlParams;
     }
 
     @Override
     public void start() {
         super.start();
-        System.setProperty("DB_URL", getR2dbcUrl());
-        System.setProperty("DB_JDBC_URL", getJdbcUrl() + "&TC_REUSABLE=true");
-        System.setProperty("DB_USERNAME", getUsername());
-        System.setProperty("DB_PASSWORD", getPassword());
     }
 
     @Override

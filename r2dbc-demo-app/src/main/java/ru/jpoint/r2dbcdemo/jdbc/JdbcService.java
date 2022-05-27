@@ -7,6 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 import ru.jpoint.r2dbcdemo.domain.DomainParent;
 import ru.jpoint.r2dbcdemo.jooq.tables.records.ChildRecord;
 
+import java.util.stream.Collectors;
+
 import static ru.jpoint.r2dbcdemo.jooq.tables.Child.CHILD;
 import static ru.jpoint.r2dbcdemo.jooq.tables.Parent.PARENT;
 
@@ -23,7 +25,7 @@ public class JdbcService {
         parentRecord.store();
         parent.getChildren().forEach(child -> child.setParentId(parentRecord.getId()));
         var childrenRecords = mapper.fromDomain(parent.getChildren())
-            .stream().map(record -> dsl.newRecord(CHILD, record)).toList();
+            .stream().map(record -> dsl.newRecord(CHILD, record)).collect(Collectors.toList());
         dsl.batchStore(childrenRecords).execute();
         try (var childRecords = dsl.selectFrom(CHILD)) {
             var children = childRecords.where(CHILD.PARENT_ID.eq(parentRecord.getId()))
