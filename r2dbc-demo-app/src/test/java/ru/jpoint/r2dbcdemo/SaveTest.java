@@ -10,13 +10,13 @@ import ru.jpoint.r2dbcdemo.domain.DomainParent;
 import java.util.Collections;
 
 @Slf4j
-class R2dbcDemoApplicationTest extends BaseTest {
+class SaveTest extends BaseTest {
 
     @BeforeAll
     static void setUpAll() throws Exception {
-//        PROXY.toxics().latency("latency", ToxicDirection.DOWNSTREAM, 100)
-//            .setJitter(1);
+        PROXY.toxics().latency("latency", ToxicDirection.DOWNSTREAM, 10);
     }
+
     @Test
     void saveR2dbc() {
         DomainParent parent = r2dbcService.saveParentWithChildren(
@@ -30,9 +30,9 @@ class R2dbcDemoApplicationTest extends BaseTest {
     @Test
     void saveJdbc() {
         DomainParent parent = jdbcService.saveParentWithChildren(
-            new DomainParent()
-                .setName("parent")
-                .setChildren(Collections.nCopies(1000, new DomainChild().setName("child")))
+                new DomainParent()
+                        .setName("parent")
+                        .setChildren(Collections.nCopies(1000, new DomainChild().setName("child")))
         ).block();
         log.info("jdbc: {}", parent);
     }
