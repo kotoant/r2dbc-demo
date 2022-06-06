@@ -21,7 +21,7 @@ public class ReactiveJdbcService implements DatabaseService {
         return wrapBlockingCall(() -> service.saveParentWithChildren(parent));
     }
 
-    private <T> Mono<T> wrapBlockingCall(Callable<T> callable) {
+    public  <T> Mono<T> wrapBlockingCall(Callable<T> callable) {
         return Mono.fromCallable(callable).subscribeOn(scheduler);
     }
 }

@@ -9,7 +9,8 @@ services:
   toxiproxy-config:
     image: "shopify/toxiproxy"
     entrypoint: >
-      sh -c "/go/bin/toxiproxy-cli -h toxiproxy:8474 create postgres --listen 0.0.0.0:5433 --upstream postgres:5432"
+      sh -c "/go/bin/toxiproxy-cli -h toxiproxy:8474 create postgres --listen 0.0.0.0:5433 --upstream postgres:5432 &&
+      /go/bin/toxiproxy-cli -h toxiproxy:8474 toxic add -t latency -a latency=10 postgres"
     depends_on:
       - toxiproxy
   postgres:
