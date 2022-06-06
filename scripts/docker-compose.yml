@@ -1,0 +1,44 @@
+version: '3'
+services:
+  toxiproxy:
+    image: "shopify/toxiproxy"
+    ports:
+      - "18474:8474"
+      - "15433:5433"
+  # We created proxy configuration from another ephemeral container
+  toxiproxy-config:
+    image: "shopify/toxiproxy"
+    entrypoint: >
+      sh -c "/go/bin/toxiproxy-cli -h toxiproxy:8474 create postgres --listen 0.0.0.0:5433 --upstream postgres:5432"
+    depends_on:
+      - toxiproxy
+  postgres:
+    image: "postgres:14"
+    ports:
+      - "15432:5432"
+    environment:
+      - POSTGRES_USER=r2dbc_demo
+      - POSTGRES_PASSWORD=r2dbc_demo
+      - POSTGRES_DB=r2dbc_demo
+    volumes:
+      - ../postgres-data:/var/lib/postgresql/data
+      # copy the sql script to create tables
+      - ../r2dbc-demo-db/src/main/resources/db/init.sql:/docker-entrypoint-initdb.d/init.sql
+    healthcheck:
+      test: "pg_isready -q -h postgres -U r2dbc_demo"
+      interval: 3s
+      timeout: 5s
+      retries: 15
+  liquibase:
+    image: "liquibase/liquibase"
+    command: >
+      --url=jdbc:postgresql://postgres:5432/r2dbc_demo?currentSchema=r2dbc_demo --changelog-file=database_changelog.xml
+      --username=r2dbc_demo --password=r2dbc_demo update
+    volumes:
+      - ../r2dbc-demo-db/src/main/resources/db/changelog:/liquibase/changelog
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+volumes:
+    postgres-data:

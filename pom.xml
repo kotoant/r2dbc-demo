@@ -21,8 +21,11 @@
 		<testcontainers.version>1.17.2</testcontainers.version>
 	</properties>
 	<modules>
-		<module>r2dbc-demo-app</module>
+		<module>r2dbc-demo-core</module>
 		<module>r2dbc-demo-db</module>
+		<module>r2dbc-demo-webmvc-jdbc</module>
+		<module>r2dbc-demo-webflux-jdbc</module>
+		<module>r2dbc-demo-webflux-r2dbc</module>
 	</modules>
 	<dependencyManagement>
 		<dependencies>
@@ -36,6 +39,11 @@
 			<dependency>
 				<groupId>ru.jpoint</groupId>
 				<artifactId>r2dbc-demo-db</artifactId>
+				<version>${project.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>ru.jpoint</groupId>
+				<artifactId>r2dbc-demo-core</artifactId>
 				<version>${project.version}</version>
 			</dependency>
 			<!-- MapStruct -->

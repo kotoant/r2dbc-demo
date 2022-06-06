@@ -2,7 +2,7 @@ spring:
   codec:
     maxInMemorySize: 10MB
   r2dbc:
-    url: ${DB_URL}?schema=r2dbc_demo&connectTimeout=PT15S&initialSize=10&maxSize=25&maxLifeTime=PT10M&maxIdleTime=PT5M&maxAcquireTime=PT30S&maxCreateConnectionTime=PT15S&validationQuery=select%201
+    url: ${DB_URL}?schema=r2dbc_demo&connectTimeout=PT15S&initialSize=10&maxSize=100&maxLifeTime=PT10M&maxIdleTime=PT5M&maxAcquireTime=PT30S&maxCreateConnectionTime=PT15S&validationQuery=select%201
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
     properties:
@@ -18,7 +18,7 @@ spring:
       max-lifetime: 1800000 # 30 minutes
       connection-test-query: select 1
       minimum-idle: 10
-      maximum-pool-size: 25
+      maximum-pool-size: 100
       pool-name: spring-hikari
   liquibase:
     enabled: true
