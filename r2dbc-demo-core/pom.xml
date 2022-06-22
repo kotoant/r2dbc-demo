@@ -179,11 +179,21 @@
                     <generator>
                         <database>
                             <name>org.jooq.meta.postgres.PostgresDatabase</name>
-                            <includes>.*</includes>
+                            <includes>
+                                r2dbc_demo\..*
+                                | pg_catalog\.pg_sleep
+                            </includes>
                             <excludes>
                                 databasechangelog.*
                             </excludes>
-                            <inputSchema>r2dbc_demo</inputSchema>
+                            <schemata>
+                                <schema>
+                                    <inputSchema>r2dbc_demo</inputSchema>
+                                </schema>
+                                <schema>
+                                    <inputSchema>pg_catalog</inputSchema>
+                                </schema>
+                            </schemata>
                             <outputSchemaToDefault>true</outputSchemaToDefault>
                             <forcedTypes>
                                 <forcedType>

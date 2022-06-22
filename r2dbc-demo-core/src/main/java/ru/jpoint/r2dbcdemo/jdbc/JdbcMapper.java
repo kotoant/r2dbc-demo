@@ -4,8 +4,8 @@ import org.mapstruct.Mapper;
 import org.mapstruct.NullValueCheckStrategy;
 import ru.jpoint.r2dbcdemo.domain.DomainChild;
 import ru.jpoint.r2dbcdemo.domain.DomainParent;
-import ru.jpoint.r2dbcdemo.jooq.tables.records.ChildRecord;
-import ru.jpoint.r2dbcdemo.jooq.tables.records.ParentRecord;
+import ru.jpoint.r2dbcdemo.jooq.r2dbc_demo.tables.records.ChildRecord;
+import ru.jpoint.r2dbcdemo.jooq.r2dbc_demo.tables.records.ParentRecord;
 
 import java.util.List;
 
